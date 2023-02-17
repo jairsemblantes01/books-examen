@@ -20,7 +20,6 @@ services:
       - 80
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-
   front-service:
     image: front-e
     environment:
@@ -37,50 +36,43 @@ services:
       - "traefik.http.routers.fronts.rule=PathPrefix(`/app3`)"
       - "traefik.http.middlewares.fronts.stripprefix.prefixes=/app3"
       - "traefik.http.routers.fronts.middlewares=fronts"
-
   authors-service:
     image: authors-e
     environment:
       QUARKUS_DATASOURCE_USERNAME: postgres
       QUARKUS_DATASOURCE_PASSWORD: postgres
       QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://postgres-sql:5432/distribuida
-      QUARKUS_HTTP_PORT: 8080
-
+      QUARKUS_HTTP_PORT: 7002
     depends_on:
       - postgres-sql
     deploy:
       replicas: 1
+    ports:
+      - "7002:7002"
     expose:
-      - 8080
+      - 7002
     labels:
       - "traefik.http.routers.authors.rule=PathPrefix(`/app2`)"
       - "traefik.http.middlewares.authors.stripprefix.prefixes=/app2"
       - "traefik.http.routers.authors.middlewares=authors"
-      - "traefik.http.routers.authors.entrypoints=web"
-      - "traefik.http.routers.authors.service=authors"
-      - "traefik.http.services.authors.loadbalancer.server.port=8080"
-      - "traefik.http.routers.authors.tls=true"
-
   books-service:
     image: books-e
     environment:
-      DB_CONNECTION_USER: postgres
-      DB_CONNECTION_PASSWORD: postgres
-      DB_CONNECTION_URL: jdbc:postgresql://postgres-sql:5432/distribuida
+      db_user: postgres
+      db_password: postgres
+      db_url: jdbc:postgresql://postgres-sql:5432/distribuida
       SERVER_PORT: 7001
       AUTHOR_URL: http://proxy/app2/authors
     depends_on:
       - postgres-sql
     deploy:
       replicas: 1
+    ports:
+      - "7001:7001"
     expose:
       - 7001
     labels:
       - "traefik.http.routers.books.rule=PathPrefix(`/app1`)"
       - "traefik.http.middlewares.books.stripprefix.prefixes=/app1"
       - "traefik.http.routers.books.middlewares=books"
-      - "traefik.http.routers.books.entrypoints=web"
-      - "traefik.http.routers.books.service=books"
-      - "traefik.http.services.books.loadbalancer.server.port=7001"
-      - "traefik.http.routers.books.tls=true"
 
