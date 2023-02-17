@@ -1,0 +1,37 @@
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: helidon-mp-swagger
+  labels:
+    app: helidon-mp-swagger
+spec:
+  type: NodePort
+  selector:
+    app: helidon-mp-swagger
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: http
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: helidon-mp-swagger
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: helidon-mp-swagger
+  template:
+    metadata:
+      labels:
+        app: helidon-mp-swagger
+        version: v1
+    spec:
+      containers:
+        - name: helidon-mp-swagger
+          image: helidon-mp-swagger
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080

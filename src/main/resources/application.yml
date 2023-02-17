@@ -1,0 +1,10 @@
+server:
+  port: 3007
+javax:
+  sql:
+    DataSource:
+      dataBaseOne:
+        dataSourceClassName: org.postgresql.ds.PGSimpleDataSource
+        dataSource:
+          url: jdbc:postgresql://localhost:5432/distribuida
+          user: postgres

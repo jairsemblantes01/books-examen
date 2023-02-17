@@ -1,0 +1,88 @@
+openapi: 3.0.0
+info:
+  title: Aplicacion de Libros
+  description: API REST para la gestion de libros
+  version: 0.1.9
+paths:
+  /books/:
+    get:
+      summary: Obtiene todos los libros
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    isbn:
+                      type: string
+                    title:
+                      type: string
+  /books:
+    post:
+      summary: Agrega un nuevo libro
+      requestBody:
+        content:
+          application/json:
+            schema:      # Request body contents
+              type: object
+              properties:
+                id:
+                  type: integer
+                isbn:
+                  type: string
+                title:
+                    type: string
+                author:
+                    type: string
+                price:
+                    type: number
+              example:   # Sample object
+                id: 1
+                isbn: 978-3
+                title: Helidon MP
+                price: 100
+
+      responses:
+        '200':
+          description: OK
+  /books/{id}/:
+    get:
+      summary: Obtiene un libro por su id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  isbn:
+                    type: string
+                  title:
+                    type: string
+  /books/{id}:
+    delete:
+      summary: Elimina un libro por su id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
