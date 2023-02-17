@@ -27,13 +27,13 @@ public Book findOne(int id) {
 }
 
 @Override
-public Book update(Book singer) {
-    return bookDao.update(singer);
+public Book update(Book book) {
+    return bookDao.update(book);
 }
 
 @Override
-public Book save(Book singer) {
-    return bookDao.save(singer);
+public Book save(Book book) {
+    return bookDao.save(book);
 }
 
 @Override

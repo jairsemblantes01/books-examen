@@ -25,13 +25,13 @@ public Book findOne(int id) {
 
 @Override
 @Transactional
-public Book update(Book singer) {
+public Book update(Book book) {
 	try {
 		em.getTransaction().begin();
-		em.merge(singer);
+		em.merge(book);
 		em.getTransaction().commit();
 		em.close();
-		return singer;
+		return book;
 	} catch (Exception e) {
 		em.getTransaction().rollback();
 		em.close();
@@ -41,13 +41,13 @@ public Book update(Book singer) {
 
 @Override
 @Transactional
-public Book save(Book singer) {
+public Book save(Book book) {
 	try {
 		em.getTransaction().begin();
-		em.persist(singer);
+		em.persist(book);
 		em.getTransaction().commit();
 		em.close();
-		return singer;
+		return book;
 	} catch (Exception e) {
 		em.getTransaction().rollback();
 		em.close();

@@ -7,7 +7,7 @@ import java.util.List;
 public interface BooksController {
 	List<Book> findAll();
 	Book findOne(int id);
-	Book update(int id, Book singer);
-	Book save(Book singer);
+	Book update(int id, Book book);
+	Book save(Book book);
 	void delete(int id);
 }

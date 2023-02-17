@@ -9,7 +9,7 @@ public interface BookRepository {
 
 List<Book> findAll();
 Book findOne(int id);
-Book update(Book singer);
-Book save(Book singer);
+Book update(Book book);
+Book save(Book book);
 void delete(int id);
 }
